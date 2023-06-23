@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+import LastSeen from './LastSeen';
 
-export default function TodoList({ todoList, deleteTodo, setTodoList }) {
+export default function TodoList({ todoList, deleteTodo, setTodoList, date }) {
   const [editKey, setEditKey] = useState(null);
   const [editedTodo, setEditedTodo] = useState('');
 
@@ -28,47 +29,53 @@ export default function TodoList({ todoList, deleteTodo, setTodoList }) {
   };
 
   return (
-    <ul className="todo-list">
-      {todoList.map((todo, key) => (
-        <div className="todo" key={key}>
-          {editKey === key ? (
-            // Render the edit mode UI
-            <>
-              <input
-                type="text"
-                value={editedTodo}
-                onChange={(e) => setEditedTodo(e.target.value)}
-              />
-              <button
-                className="save-button"
-                onClick={() => handleSaveEdit(key)}
-              >
-                Save
-              </button>
-              <button className="cancel-button" onClick={handleCancelEdit}>
-                Cancel
-              </button>
-            </>
-          ) : (
-            // Render the view mode UI
-            <>
-              <li key={key}>{todo}</li>
-              <button
-                className="delete-button"
-                onClick={() => deleteTodo(todo)}
-              >
-                Delete
-              </button>
-              <button
-                className="edit-button"
-                onClick={() => handleEdit(key, todo)}
-              >
-                Edit
-              </button>
-            </>
-          )}
-        </div>
-      ))}
-    </ul>
+    <>
+      <h2>Current Todos</h2>
+      <ul className="todo-list">
+        {todoList.map((todo, key) => (
+          <div className="todo" key={key}>
+            {editKey === key ? (
+              // Render the edit mode UI
+              <>
+                <input
+                  type="text"
+                  value={editedTodo}
+                  onChange={(e) => setEditedTodo(e.target.value)}
+                />
+                <button
+                  className="save-button"
+                  onClick={() => handleSaveEdit(key)}
+                >
+                  Save
+                </button>
+                <button className="cancel-button" onClick={handleCancelEdit}>
+                  Cancel
+                </button>
+              </>
+            ) : (
+              // Render the view mode UI
+              <>
+                <li key={key}>{todo}</li>
+                <button
+                  className="delete-button"
+                  onClick={() => deleteTodo(todo)}
+                >
+                  Delete
+                </button>
+                <button
+                  className="edit-button"
+                  onClick={() => handleEdit(key, todo)}
+                >
+                  Edit
+                </button>
+                <span>
+                  Days old: <LastSeen />
+                </span>
+              </>
+            )}
+          </div>
+        ))}
+      </ul>
+    </>
   );
 }

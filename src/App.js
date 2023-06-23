@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './App.css';
 import TodoInput from './TodoInput';
 import TodoList from './TodoList';
+import Completed from './Completed'
 
 export default function App() {
   const [todo, setTodo] = useState('');
@@ -11,7 +12,7 @@ export default function App() {
   const generateUniqueID = () => {
     return Date.now().toString(36) + Math.random().toString(36).substr(2);
   };
-
+  
   // Function to add a new todo item
   const addTodo = () => {
     if (todo !== '') {
@@ -44,6 +45,7 @@ export default function App() {
           deleteTodo={deleteTodo}
           setTodoList={setTodoList}
         />
+        <Completed />
       </div>
     </>
   );
